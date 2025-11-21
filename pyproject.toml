@@ -29,6 +29,8 @@ classifiers = [
 ]
 dependencies = [
     "pillow>=9.0.0",
+    "svgwrite>=1.4.0",
+    "cairosvg>=2.7.0",  # For SVG to PNG conversion when needed
 ]
 
 [project.optional-dependencies]

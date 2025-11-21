@@ -21,7 +21,10 @@ These animations show the gradual activation of muscles during exercise, transit
 ## Features
 
 - **High-Fidelity Wireframe Figures**: Anatomically accurate wireframe representations with detailed muscle contours, joint lines, and proper body proportions
-- **Muscle Activation Visualization**: Color-coded muscle highlighting (blue = inactive, red = fully activated)
+- **Enhanced Realistic Legs**: Detailed quadriceps, hamstrings, calves with visible muscle divisions, knee caps, ankle bones, and realistic feet
+- **Muscle Activation Visualization**: Color-coded muscle highlighting (blue = inactive, red = fully activated) with 3D gradient shading
+- **SVG Vector Output**: Generate scalable vector graphics (SVG) files that can be scaled to any size without quality loss
+- **PNG Raster Output**: Traditional bitmap images with high-quality rendering
 - **29+ Predefined Calisthenics Exercises**: Ready-to-use muscle activation patterns for popular bodyweight exercises
 - **Multiple Muscle Groups**: Support for 14 major muscle groups including:
   - Upper body: chest, shoulders, biceps, triceps, forearms, upper back, lats, abs, obliques
@@ -43,6 +46,8 @@ pip install -e ".[dev]"
 
 ## Quick Start
 
+### Generate PNG Images
+
 ```python
 from workout_generator import generate_workout_image
 
@@ -60,6 +65,21 @@ image = generate_workout_image(
     },
     save_path="bicep_curls.png"
 )
+```
+
+### Generate SVG Vector Graphics (NEW!)
+
+```python
+from workout_generator import generate_workout_svg
+
+# Generate scalable vector graphics
+svg = generate_workout_svg("Push-up", save_path="pushup.svg")
+
+# SVG files can be:
+# - Scaled to any size without quality loss
+# - Opened in web browsers
+# - Edited in vector graphics software (Inkscape, Adobe Illustrator)
+# - Converted to PNG: cairosvg pushup.svg -o pushup.png
 ```
 
 ## Predefined Calisthenics Exercises
@@ -257,6 +277,18 @@ python generate_animations.py
 This will generate animated GIFs in `examples/output/` for:
 - Seated Bicep Curls (animated GIF showing muscle activation)
 - Sit-ups (animated GIF showing muscle activation)
+
+### Generate SVG Examples
+```bash
+cd examples
+python generate_svg_examples.py
+```
+
+This will generate scalable vector graphics in `examples/output/svg/` for:
+- Push-up, Squat, Pull-up, Plank (as SVG files)
+- Chin-up animation frames (10 SVG files)
+
+SVG files can be scaled to any resolution without quality loss and edited in vector graphics software.
 
 ## API Reference
 

@@ -161,13 +161,17 @@ MUSCLE_DEFINITIONS = {
         MuscleDefinition(
             "Left Quadriceps",
             MuscleGroup.QUADS,
-            [(0.41, 0.56), (0.45, 0.56), (0.45, 0.73), (0.41, 0.73)],
+            # More realistic quad shape with proper muscle bulge
+            [(0.405, 0.56), (0.465, 0.56), (0.468, 0.62), (0.465, 0.70), (0.455, 0.73), 
+             (0.40, 0.73), (0.398, 0.68), (0.398, 0.60)],
             "left"
         ),
         MuscleDefinition(
             "Right Quadriceps",
             MuscleGroup.QUADS,
-            [(0.59, 0.56), (0.55, 0.56), (0.55, 0.73), (0.59, 0.73)],
+            # Mirror with proper bulge
+            [(0.595, 0.56), (0.535, 0.56), (0.532, 0.62), (0.535, 0.70), (0.545, 0.73),
+             (0.60, 0.73), (0.602, 0.68), (0.602, 0.60)],
             "right"
         ),
     ],
@@ -175,13 +179,17 @@ MUSCLE_DEFINITIONS = {
         MuscleDefinition(
             "Left Hamstring",
             MuscleGroup.HAMSTRINGS,
-            [(0.42, 0.56), (0.45, 0.56), (0.45, 0.72), (0.42, 0.72)],
+            # More defined hamstring shape
+            [(0.415, 0.56), (0.455, 0.56), (0.455, 0.68), (0.450, 0.72), 
+             (0.420, 0.72), (0.415, 0.65)],
             "left"
         ),
         MuscleDefinition(
             "Right Hamstring",
             MuscleGroup.HAMSTRINGS,
-            [(0.58, 0.56), (0.55, 0.56), (0.55, 0.72), (0.58, 0.72)],
+            # Mirror
+            [(0.585, 0.56), (0.545, 0.56), (0.545, 0.68), (0.550, 0.72),
+             (0.580, 0.72), (0.585, 0.65)],
             "right"
         ),
     ],
@@ -189,13 +197,17 @@ MUSCLE_DEFINITIONS = {
         MuscleDefinition(
             "Left Glute",
             MuscleGroup.GLUTES,
-            [(0.42, 0.53), (0.45, 0.54), (0.44, 0.58), (0.41, 0.57)],
+            # Rounder, more realistic glute shape
+            [(0.415, 0.525), (0.455, 0.535), (0.460, 0.555), (0.450, 0.575), 
+             (0.420, 0.575), (0.405, 0.555)],
             "left"
         ),
         MuscleDefinition(
             "Right Glute",
             MuscleGroup.GLUTES,
-            [(0.58, 0.53), (0.55, 0.54), (0.56, 0.58), (0.59, 0.57)],
+            # Mirror
+            [(0.585, 0.525), (0.545, 0.535), (0.540, 0.555), (0.550, 0.575),
+             (0.580, 0.575), (0.595, 0.555)],
             "right"
         ),
     ],
@@ -203,13 +215,17 @@ MUSCLE_DEFINITIONS = {
         MuscleDefinition(
             "Left Calf",
             MuscleGroup.CALVES,
-            [(0.41, 0.74), (0.45, 0.74), (0.45, 0.88), (0.42, 0.90), (0.41, 0.88)],
+            # More realistic calf with proper gastrocnemius bulge
+            [(0.405, 0.745), (0.455, 0.745), (0.46, 0.78), (0.455, 0.82), 
+             (0.445, 0.87), (0.430, 0.90), (0.410, 0.90), (0.400, 0.85), (0.398, 0.78)],
             "left"
         ),
         MuscleDefinition(
             "Right Calf",
             MuscleGroup.CALVES,
-            [(0.59, 0.74), (0.55, 0.74), (0.55, 0.88), (0.58, 0.90), (0.59, 0.88)],
+            # Mirror with bulge
+            [(0.595, 0.745), (0.545, 0.745), (0.54, 0.78), (0.545, 0.82),
+             (0.555, 0.87), (0.570, 0.90), (0.590, 0.90), (0.600, 0.85), (0.602, 0.78)],
             "right"
         ),
     ],

@@ -132,30 +132,42 @@ class WireframeFigure:
             (0.70, 0.52), (0.74, 0.52)
         ], fill_color=self.skin_tone + (20,))
         
-        # Legs volume
-        # Left thigh
+        # Legs volume - more realistic with proper muscle bulges
+        # Left thigh - with proper quad and hamstring bulge
         self._draw_smooth_shape(draw, [
-            (0.41, 0.55), (0.46, 0.55),
-            (0.45, 0.73), (0.41, 0.73)
-        ], fill_color=self.skin_tone + (20,))
+            (0.41, 0.55), (0.46, 0.55),  # Top of thigh
+            (0.465, 0.60),  # Quad bulge outward
+            (0.46, 0.68),   # Mid thigh
+            (0.455, 0.73),  # Just above knee
+            (0.41, 0.73), (0.405, 0.68), (0.40, 0.60)  # Inner thigh taper
+        ], fill_color=self.skin_tone + (25,))
         
-        # Right thigh
+        # Right thigh - mirror with proper bulge
         self._draw_smooth_shape(draw, [
-            (0.59, 0.55), (0.54, 0.55),
-            (0.55, 0.73), (0.59, 0.73)
-        ], fill_color=self.skin_tone + (20,))
+            (0.59, 0.55), (0.54, 0.55),  # Top of thigh
+            (0.535, 0.60),  # Quad bulge outward
+            (0.54, 0.68),   # Mid thigh
+            (0.545, 0.73),  # Just above knee
+            (0.59, 0.73), (0.595, 0.68), (0.60, 0.60)  # Inner thigh taper
+        ], fill_color=self.skin_tone + (25,))
         
-        # Left calf
+        # Left calf - realistic calf muscle bulge
         self._draw_smooth_shape(draw, [
-            (0.41, 0.74), (0.45, 0.74),
-            (0.45, 0.90), (0.41, 0.90)
-        ], fill_color=self.skin_tone + (20,))
+            (0.415, 0.74), (0.445, 0.74),  # Top of calf
+            (0.45, 0.78),   # Calf bulge peak
+            (0.445, 0.85),  # Lower calf
+            (0.43, 0.90),   # Ankle taper
+            (0.41, 0.90), (0.405, 0.85), (0.40, 0.78)  # Inner calf
+        ], fill_color=self.skin_tone + (25,))
         
-        # Right calf
+        # Right calf - mirror with realistic bulge
         self._draw_smooth_shape(draw, [
-            (0.59, 0.74), (0.55, 0.74),
-            (0.55, 0.90), (0.59, 0.90)
-        ], fill_color=self.skin_tone + (20,))
+            (0.585, 0.74), (0.555, 0.74),  # Top of calf
+            (0.55, 0.78),   # Calf bulge peak
+            (0.555, 0.85),  # Lower calf
+            (0.57, 0.90),   # Ankle taper
+            (0.59, 0.90), (0.595, 0.85), (0.60, 0.78)  # Inner calf
+        ], fill_color=self.skin_tone + (25,))
         
         # === NOW DRAW WIREFRAME DETAILS ON TOP ===
         # === HEAD AND NECK ===
@@ -316,77 +328,199 @@ class WireframeFigure:
         right_hand = [(0.73, 0.53), (0.74, 0.55), (0.75, 0.57)]
         self._draw_contour(draw, right_hand, self.line_width, self.line_color)
         
-        # === LEGS ===
+        # === LEGS (Enhanced for more realistic appearance) ===
         # Left leg
-        # Hip/glute area
-        left_hip_outer = [(0.42, 0.53), (0.41, 0.56), (0.41, 0.59)]
+        # Hip/glute area with more definition
+        left_hip_outer = [(0.42, 0.53), (0.405, 0.56), (0.40, 0.59), (0.40, 0.62)]
         self._draw_contour(draw, left_hip_outer, self.line_width, self.line_color)
         
-        # Quadriceps contours
-        left_quad_outer = [(0.41, 0.59), (0.40, 0.64), (0.40, 0.69), (0.41, 0.73)]
-        left_quad_inner = [(0.45, 0.56), (0.45, 0.64), (0.45, 0.69), (0.45, 0.73)]
+        # Quadriceps contours - more detailed with muscle groups
+        # Vastus lateralis (outer quad)
+        left_quad_outer = [(0.40, 0.59), (0.395, 0.64), (0.395, 0.69), (0.40, 0.73)]
         self._draw_contour(draw, left_quad_outer, self.line_width, self.line_color)
+        
+        # Rectus femoris (center quad)
+        left_quad_center = [(0.425, 0.56), (0.425, 0.62), (0.425, 0.68), (0.425, 0.73)]
+        self._draw_contour(draw, left_quad_center, self.detail_width, self.detail_color)
+        
+        # Vastus medialis (inner quad)
+        left_quad_inner = [(0.45, 0.56), (0.455, 0.64), (0.455, 0.69), (0.45, 0.73)]
         self._draw_contour(draw, left_quad_inner, self.line_width, self.line_color)
         
-        # Quad muscle divisions
+        # Quad muscle divisions for realism
         quad_divisions_left = [
-            [(0.42, 0.60), (0.44, 0.62)],
-            [(0.42, 0.66), (0.44, 0.68)],
+            [(0.405, 0.60), (0.445, 0.60)],  # Upper quad division
+            [(0.40, 0.66), (0.445, 0.66)],   # Mid quad division
+            [(0.40, 0.70), (0.445, 0.70)],   # Lower quad division
         ]
         for div in quad_divisions_left:
             self._draw_contour(draw, div, self.detail_width, self.detail_color)
         
-        # Knee
-        left_knee = [(0.41, 0.73), (0.43, 0.74), (0.45, 0.73)]
+        # IT Band (side of thigh)
+        left_it_band = [(0.397, 0.56), (0.395, 0.64), (0.395, 0.72)]
+        self._draw_contour(draw, left_it_band, self.detail_width, self.detail_color)
+        
+        # Knee cap (patella) - more detailed
+        left_kneecap_outline = [
+            (0.415, 0.725), (0.435, 0.725),
+            (0.440, 0.735), (0.435, 0.745),
+            (0.415, 0.745), (0.410, 0.735)
+        ]
+        self._draw_smooth_shape(draw, left_kneecap_outline, 
+                                fill_color=self.skin_tone + (35,),
+                                outline_color=self.detail_color)
+        
+        # Knee joint line
+        left_knee = [(0.40, 0.735), (0.425, 0.74), (0.45, 0.735)]
         self._draw_contour(draw, left_knee, self.detail_width, self.detail_color)
         
-        # Calf (gastrocnemius)
-        left_calf_outer = [(0.41, 0.73), (0.40, 0.77), (0.40, 0.84), (0.41, 0.90)]
-        left_calf_inner = [(0.45, 0.73), (0.45, 0.77), (0.45, 0.84), (0.45, 0.90)]
+        # Calf (gastrocnemius) - two heads visible
+        # Lateral head (outer calf)
+        left_calf_outer = [(0.40, 0.745), (0.395, 0.77), (0.395, 0.82), (0.40, 0.87), (0.41, 0.90)]
         self._draw_contour(draw, left_calf_outer, self.line_width, self.line_color)
+        
+        # Medial head (inner calf) - larger and more prominent
+        left_calf_inner = [(0.45, 0.745), (0.455, 0.76), (0.46, 0.80), (0.455, 0.86), (0.445, 0.90)]
         self._draw_contour(draw, left_calf_inner, self.line_width, self.line_color)
         
-        # Calf muscle shape
-        left_calf_bulge = [(0.42, 0.78), (0.44, 0.78)]
-        self._draw_contour(draw, left_calf_bulge, self.detail_width, self.detail_color)
+        # Calf muscle peak/bulge
+        left_calf_peak = [(0.405, 0.78), (0.43, 0.79), (0.45, 0.78)]
+        self._draw_contour(draw, left_calf_peak, self.detail_width, self.detail_color)
         
-        # Ankle
-        left_ankle = [(0.41, 0.90), (0.42, 0.91), (0.44, 0.91), (0.45, 0.90)]
-        self._draw_contour(draw, left_ankle, self.detail_width, self.detail_color)
+        # Achilles tendon
+        left_achilles = [(0.425, 0.87), (0.425, 0.90)]
+        self._draw_contour(draw, left_achilles, self.detail_width, self.detail_color)
         
-        # Foot
-        left_foot = [(0.43, 0.91), (0.42, 0.94), (0.40, 0.96)]
-        self._draw_contour(draw, left_foot, self.line_width, self.line_color)
+        # Soleus (lower calf muscle)
+        left_soleus = [(0.410, 0.82), (0.440, 0.82)]
+        self._draw_contour(draw, left_soleus, self.detail_width, self.detail_color)
         
-        # Right leg (mirror of left)
-        right_hip_outer = [(0.58, 0.53), (0.59, 0.56), (0.59, 0.59)]
+        # Ankle bones (medial and lateral malleolus)
+        left_ankle_outer = self._scale_point((0.405, 0.905))
+        left_ankle_inner = self._scale_point((0.445, 0.905))
+        # Outer ankle bone
+        draw.ellipse([left_ankle_outer[0]-4, left_ankle_outer[1]-4,
+                     left_ankle_outer[0]+4, left_ankle_outer[1]+4],
+                    fill=self.skin_tone + (50,), outline=self.detail_color, width=1)
+        # Inner ankle bone (slightly higher)
+        draw.ellipse([left_ankle_inner[0]-4, left_ankle_inner[1]-6,
+                     left_ankle_inner[0]+4, left_ankle_inner[1]+2],
+                    fill=self.skin_tone + (50,), outline=self.detail_color, width=1)
+        
+        # Foot - more detailed and realistic
+        left_foot_outline = [
+            (0.425, 0.91),   # Ankle
+            (0.415, 0.93),   # Heel curve
+            (0.405, 0.945),  # Heel bottom
+            (0.405, 0.955),  # Arch
+            (0.415, 0.965),  # Ball of foot
+            (0.430, 0.970),  # Toes start
+            (0.438, 0.968),  # Toe tip
+        ]
+        self._draw_contour(draw, left_foot_outline, self.line_width, self.line_color)
+        
+        # Toe lines for detail
+        toe_lines = [
+            [(0.425, 0.965), (0.428, 0.968)],
+            [(0.432, 0.967), (0.435, 0.969)],
+        ]
+        for toe in toe_lines:
+            self._draw_contour(draw, toe, self.detail_width, self.detail_color)
+        
+        # Right leg (mirror of left with same level of detail)
+        # Hip/glute area with more definition
+        right_hip_outer = [(0.58, 0.53), (0.595, 0.56), (0.60, 0.59), (0.60, 0.62)]
         self._draw_contour(draw, right_hip_outer, self.line_width, self.line_color)
         
-        right_quad_outer = [(0.59, 0.59), (0.60, 0.64), (0.60, 0.69), (0.59, 0.73)]
-        right_quad_inner = [(0.55, 0.56), (0.55, 0.64), (0.55, 0.69), (0.55, 0.73)]
+        # Quadriceps contours - more detailed with muscle groups
+        # Vastus lateralis (outer quad)
+        right_quad_outer = [(0.60, 0.59), (0.605, 0.64), (0.605, 0.69), (0.60, 0.73)]
         self._draw_contour(draw, right_quad_outer, self.line_width, self.line_color)
+        
+        # Rectus femoris (center quad)
+        right_quad_center = [(0.575, 0.56), (0.575, 0.62), (0.575, 0.68), (0.575, 0.73)]
+        self._draw_contour(draw, right_quad_center, self.detail_width, self.detail_color)
+        
+        # Vastus medialis (inner quad)
+        right_quad_inner = [(0.55, 0.56), (0.545, 0.64), (0.545, 0.69), (0.55, 0.73)]
         self._draw_contour(draw, right_quad_inner, self.line_width, self.line_color)
         
+        # Quad muscle divisions for realism
         quad_divisions_right = [
-            [(0.58, 0.60), (0.56, 0.62)],
-            [(0.58, 0.66), (0.56, 0.68)],
+            [(0.595, 0.60), (0.555, 0.60)],  # Upper quad division
+            [(0.60, 0.66), (0.555, 0.66)],   # Mid quad division
+            [(0.60, 0.70), (0.555, 0.70)],   # Lower quad division
         ]
         for div in quad_divisions_right:
             self._draw_contour(draw, div, self.detail_width, self.detail_color)
         
-        right_knee = [(0.59, 0.73), (0.57, 0.74), (0.55, 0.73)]
+        # IT Band (side of thigh)
+        right_it_band = [(0.603, 0.56), (0.605, 0.64), (0.605, 0.72)]
+        self._draw_contour(draw, right_it_band, self.detail_width, self.detail_color)
+        
+        # Knee cap (patella) - more detailed
+        right_kneecap_outline = [
+            (0.585, 0.725), (0.565, 0.725),
+            (0.560, 0.735), (0.565, 0.745),
+            (0.585, 0.745), (0.590, 0.735)
+        ]
+        self._draw_smooth_shape(draw, right_kneecap_outline,
+                                fill_color=self.skin_tone + (35,),
+                                outline_color=self.detail_color)
+        
+        # Knee joint line
+        right_knee = [(0.60, 0.735), (0.575, 0.74), (0.55, 0.735)]
         self._draw_contour(draw, right_knee, self.detail_width, self.detail_color)
         
-        right_calf_outer = [(0.59, 0.73), (0.60, 0.77), (0.60, 0.84), (0.59, 0.90)]
-        right_calf_inner = [(0.55, 0.73), (0.55, 0.77), (0.55, 0.84), (0.55, 0.90)]
+        # Calf (gastrocnemius) - two heads visible
+        # Lateral head (outer calf)
+        right_calf_outer = [(0.60, 0.745), (0.605, 0.77), (0.605, 0.82), (0.60, 0.87), (0.59, 0.90)]
         self._draw_contour(draw, right_calf_outer, self.line_width, self.line_color)
+        
+        # Medial head (inner calf) - larger and more prominent
+        right_calf_inner = [(0.55, 0.745), (0.545, 0.76), (0.54, 0.80), (0.545, 0.86), (0.555, 0.90)]
         self._draw_contour(draw, right_calf_inner, self.line_width, self.line_color)
         
-        right_calf_bulge = [(0.58, 0.78), (0.56, 0.78)]
-        self._draw_contour(draw, right_calf_bulge, self.detail_width, self.detail_color)
+        # Calf muscle peak/bulge
+        right_calf_peak = [(0.595, 0.78), (0.57, 0.79), (0.55, 0.78)]
+        self._draw_contour(draw, right_calf_peak, self.detail_width, self.detail_color)
         
-        right_ankle = [(0.59, 0.90), (0.58, 0.91), (0.56, 0.91), (0.55, 0.90)]
-        self._draw_contour(draw, right_ankle, self.detail_width, self.detail_color)
+        # Achilles tendon
+        right_achilles = [(0.575, 0.87), (0.575, 0.90)]
+        self._draw_contour(draw, right_achilles, self.detail_width, self.detail_color)
         
-        right_foot = [(0.57, 0.91), (0.58, 0.94), (0.60, 0.96)]
-        self._draw_contour(draw, right_foot, self.line_width, self.line_color)
+        # Soleus (lower calf muscle)
+        right_soleus = [(0.590, 0.82), (0.560, 0.82)]
+        self._draw_contour(draw, right_soleus, self.detail_width, self.detail_color)
+        
+        # Ankle bones (medial and lateral malleolus)
+        right_ankle_outer = self._scale_point((0.595, 0.905))
+        right_ankle_inner = self._scale_point((0.555, 0.905))
+        # Outer ankle bone
+        draw.ellipse([right_ankle_outer[0]-4, right_ankle_outer[1]-4,
+                     right_ankle_outer[0]+4, right_ankle_outer[1]+4],
+                    fill=self.skin_tone + (50,), outline=self.detail_color, width=1)
+        # Inner ankle bone (slightly higher)
+        draw.ellipse([right_ankle_inner[0]-4, right_ankle_inner[1]-6,
+                     right_ankle_inner[0]+4, right_ankle_inner[1]+2],
+                    fill=self.skin_tone + (50,), outline=self.detail_color, width=1)
+        
+        # Foot - more detailed and realistic
+        right_foot_outline = [
+            (0.575, 0.91),   # Ankle
+            (0.585, 0.93),   # Heel curve
+            (0.595, 0.945),  # Heel bottom
+            (0.595, 0.955),  # Arch
+            (0.585, 0.965),  # Ball of foot
+            (0.570, 0.970),  # Toes start
+            (0.562, 0.968),  # Toe tip
+        ]
+        self._draw_contour(draw, right_foot_outline, self.line_width, self.line_color)
+        
+        # Toe lines for detail
+        toe_lines_right = [
+            [(0.575, 0.965), (0.572, 0.968)],
+            [(0.568, 0.967), (0.565, 0.969)],
+        ]
+        for toe in toe_lines_right:
+            self._draw_contour(draw, toe, self.detail_width, self.detail_color)
