@@ -1,5 +1,5 @@
 """
-High-fidelity wireframe figure generation for anatomically accurate visualization.
+High-fidelity wireframe figure generation for lifelike anatomical visualization.
 """
 
 from typing import List, Tuple, Optional
@@ -8,22 +8,25 @@ import math
 
 
 class WireframeFigure:
-    """Creates a high-fidelity wireframe human figure with anatomical detail."""
+    """Creates a lifelike wireframe human figure with realistic anatomical detail."""
     
-    def __init__(self, width: int = 400, height: int = 800):
+    def __init__(self, width: int = 1200, height: int = 2400):
         """
         Initialize high-fidelity wireframe figure.
         
         Args:
-            width: Image width in pixels
-            height: Image height in pixels
+            width: Image width in pixels (default: 1200)
+            height: Image height in pixels (default: 2400)
         """
         self.width = width
         self.height = height
-        self.line_color = (120, 120, 120)  # Dark gray for primary wireframe
-        self.detail_color = (160, 160, 160)  # Lighter gray for detail lines
-        self.line_width = 2
-        self.detail_width = 1
+        self.line_color = (80, 80, 80)  # Darker for better contrast
+        self.detail_color = (140, 140, 140)  # Medium gray for detail lines
+        self.skin_tone = (220, 190, 170)  # Subtle skin tone for base
+        # Scale line widths based on image size (base size is 400x800)
+        scale_factor = width / 400
+        self.line_width = max(2, int(3 * scale_factor))  # Thicker lines for visibility
+        self.detail_width = max(1, int(2 * scale_factor))
         
     def _scale_point(self, point: Tuple[float, float]) -> Tuple[int, int]:
         """Convert normalized coordinates (0-1) to pixel coordinates."""
@@ -42,6 +45,17 @@ class WireframeFigure:
         if len(scaled_points) >= 2:
             draw.line(scaled_points, fill=color, width=width, joint="curve")
     
+    def _draw_smooth_shape(self, draw: ImageDraw.ImageDraw, points: List[Tuple[float, float]],
+                          fill_color: Optional[Tuple[int, int, int, int]] = None,
+                          outline_color: Optional[Tuple[int, int, int]] = None):
+        """Draw a smooth filled shape for body mass."""
+        scaled_points = [self._scale_point(p) for p in points]
+        if len(scaled_points) >= 3:
+            if fill_color:
+                draw.polygon(scaled_points, fill=fill_color, outline=None)
+            if outline_color:
+                draw.line(scaled_points + [scaled_points[0]], fill=outline_color, width=self.line_width, joint="curve")
+    
     def _draw_ellipse_outline(self, draw: ImageDraw.ImageDraw, center: Tuple[float, float],
                              width: float, height: float, color: Tuple[int, int, int] = None):
         """Draw an ellipse outline."""
@@ -57,14 +71,93 @@ class WireframeFigure:
     
     def draw_figure(self, draw: ImageDraw.ImageDraw) -> None:
         """
-        Draw a high-fidelity wireframe human figure with anatomical accuracy.
+        Draw a lifelike wireframe human figure with realistic body mass and anatomy.
         
-        This creates a detailed wireframe showing body contours, muscle groups,
+        This creates a detailed figure with subtle body volume, contours, muscle groups,
         and anatomical landmarks while remaining safe for all audiences.
         
         Args:
             draw: PIL ImageDraw object to draw on
         """
+        # === DRAW BODY MASS/VOLUME FIRST (subtle fill for realism) ===
+        # This gives the figure dimension and makes it look more lifelike
+        
+        # Head volume
+        head_center = self._scale_point((0.5, 0.08))
+        head_radius_w = int(0.06 * self.width)
+        head_radius_h = int(0.04 * self.height)
+        draw.ellipse(
+            [head_center[0] - head_radius_w, head_center[1] - head_radius_h,
+             head_center[0] + head_radius_w, head_center[1] + head_radius_h],
+            fill=self.skin_tone + (30,),  # Very subtle
+            outline=None
+        )
+        
+        # Neck volume
+        self._draw_smooth_shape(draw, [
+            (0.47, 0.12), (0.53, 0.12),
+            (0.54, 0.18), (0.46, 0.18)
+        ], fill_color=self.skin_tone + (25,))
+        
+        # Torso volume (chest to waist)
+        self._draw_smooth_shape(draw, [
+            (0.36, 0.19), (0.64, 0.19),  # Shoulders
+            (0.62, 0.28), (0.38, 0.28),  # Chest
+            (0.39, 0.40), (0.61, 0.40),  # Mid torso
+            (0.60, 0.49), (0.40, 0.49),  # Waist
+        ], fill_color=self.skin_tone + (20,))
+        
+        # Arms volume
+        # Left upper arm
+        self._draw_smooth_shape(draw, [
+            (0.31, 0.24), (0.35, 0.24),
+            (0.33, 0.38), (0.28, 0.38)
+        ], fill_color=self.skin_tone + (20,))
+        
+        # Right upper arm
+        self._draw_smooth_shape(draw, [
+            (0.69, 0.24), (0.65, 0.24),
+            (0.67, 0.38), (0.72, 0.38)
+        ], fill_color=self.skin_tone + (20,))
+        
+        # Left forearm
+        self._draw_smooth_shape(draw, [
+            (0.28, 0.39), (0.32, 0.39),
+            (0.30, 0.52), (0.26, 0.52)
+        ], fill_color=self.skin_tone + (20,))
+        
+        # Right forearm
+        self._draw_smooth_shape(draw, [
+            (0.72, 0.39), (0.68, 0.39),
+            (0.70, 0.52), (0.74, 0.52)
+        ], fill_color=self.skin_tone + (20,))
+        
+        # Legs volume
+        # Left thigh
+        self._draw_smooth_shape(draw, [
+            (0.41, 0.55), (0.46, 0.55),
+            (0.45, 0.73), (0.41, 0.73)
+        ], fill_color=self.skin_tone + (20,))
+        
+        # Right thigh
+        self._draw_smooth_shape(draw, [
+            (0.59, 0.55), (0.54, 0.55),
+            (0.55, 0.73), (0.59, 0.73)
+        ], fill_color=self.skin_tone + (20,))
+        
+        # Left calf
+        self._draw_smooth_shape(draw, [
+            (0.41, 0.74), (0.45, 0.74),
+            (0.45, 0.90), (0.41, 0.90)
+        ], fill_color=self.skin_tone + (20,))
+        
+        # Right calf
+        self._draw_smooth_shape(draw, [
+            (0.59, 0.74), (0.55, 0.74),
+            (0.55, 0.90), (0.59, 0.90)
+        ], fill_color=self.skin_tone + (20,))
+        
+        # === NOW DRAW WIREFRAME DETAILS ON TOP ===
         # === HEAD AND NECK ===
         # Head (more detailed with facial features indication)
         head_center = (0.5, 0.08)
