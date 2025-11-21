@@ -2,7 +2,7 @@
 Main workout image generator module.
 """
 
-from typing import Dict, Optional, Tuple, Union
+from typing import Dict, Optional, Tuple, Union, List
 from PIL import Image, ImageDraw, ImageFont
 import os
 
@@ -43,8 +43,8 @@ class WorkoutImageGenerator:
         self.wireframe = WireframeFigure(width, height)
         
     def _scale_polygon(
-        self, points: list[Tuple[float, float]]
-    ) -> list[Tuple[int, int]]:
+        self, points: List[Tuple[float, float]]
+    ) -> List[Tuple[int, int]]:
         """Convert normalized polygon coordinates to pixel coordinates."""
         return [(int(x * self.width), int(y * self.height)) for x, y in points]
     
@@ -95,11 +95,23 @@ class WorkoutImageGenerator:
         
         # Add title if provided with better typography
         if title:
-            try:
-                # Try to use a nicer font if available
-                font = ImageFont.truetype("/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf", 28)
-            except:
-                # Fallback to default font
+            # Cross-platform font discovery
+            font = None
+            font_paths = [
+                "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf",  # Linux
+                "/System/Library/Fonts/Helvetica.ttc",  # macOS
+                "C:\\Windows\\Fonts\\arialbd.ttf",  # Windows
+            ]
+            
+            for font_path in font_paths:
+                try:
+                    font = ImageFont.truetype(font_path, 28)
+                    break
+                except:
+                    continue
+            
+            # Fallback to default font if no system font found
+            if font is None:
                 font = ImageFont.load_default()
             
             # Draw title at the top with shadow for better readability
@@ -120,7 +132,7 @@ class WorkoutImageGenerator:
         muscle_activations: Dict[MuscleGroup, float],
         num_frames: int = 10,
         title: Optional[str] = None,
-    ) -> list[Image.Image]:
+    ) -> List[Image.Image]:
         """
         Generate animation frames showing gradual muscle activation.
         

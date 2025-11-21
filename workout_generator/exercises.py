@@ -5,7 +5,7 @@ This module contains activation data for popular bodyweight exercises, making it
 to generate workout visualizations without manually specifying muscle activations.
 """
 
-from typing import Dict
+from typing import Dict, List
 from .muscles import MuscleGroup
 
 
@@ -459,7 +459,7 @@ def get_exercise(name: str) -> Exercise:
     return EXERCISES[key]
 
 
-def list_exercises(difficulty: str = None, category: str = None) -> list[Exercise]:
+def list_exercises(difficulty: str = None, category: str = None) -> List[Exercise]:
     """
     List available exercises, optionally filtered by difficulty or category.
     
