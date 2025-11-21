@@ -62,20 +62,20 @@ class MuscleDefinition:
 
 
 # Define muscle shapes as normalized coordinates (0-1 scale)
-# These will be scaled to the actual figure size
+# These are designed to align with the high-fidelity wireframe
 MUSCLE_DEFINITIONS = {
     # Front view muscles
     MuscleGroup.CHEST: [
         MuscleDefinition(
             "Left Pectoral",
             MuscleGroup.CHEST,
-            [(0.4, 0.22), (0.45, 0.22), (0.48, 0.28), (0.42, 0.32), (0.38, 0.28)],
+            [(0.38, 0.20), (0.46, 0.20), (0.44, 0.26), (0.43, 0.28), (0.37, 0.28), (0.36, 0.24)],
             "left"
         ),
         MuscleDefinition(
             "Right Pectoral",
             MuscleGroup.CHEST,
-            [(0.6, 0.22), (0.55, 0.22), (0.52, 0.28), (0.58, 0.32), (0.62, 0.28)],
+            [(0.62, 0.20), (0.54, 0.20), (0.56, 0.26), (0.57, 0.28), (0.63, 0.28), (0.64, 0.24)],
             "right"
         ),
     ],
@@ -83,13 +83,27 @@ MUSCLE_DEFINITIONS = {
         MuscleDefinition(
             "Left Bicep",
             MuscleGroup.BICEPS,
-            [(0.32, 0.28), (0.35, 0.28), (0.36, 0.38), (0.32, 0.38)],
+            [(0.31, 0.26), (0.34, 0.26), (0.33, 0.35), (0.32, 0.37), (0.29, 0.37), (0.29, 0.30)],
             "left"
         ),
         MuscleDefinition(
             "Right Bicep",
             MuscleGroup.BICEPS,
-            [(0.68, 0.28), (0.65, 0.28), (0.64, 0.38), (0.68, 0.38)],
+            [(0.69, 0.26), (0.66, 0.26), (0.67, 0.35), (0.68, 0.37), (0.71, 0.37), (0.71, 0.30)],
+            "right"
+        ),
+    ],
+    MuscleGroup.TRICEPS: [
+        MuscleDefinition(
+            "Left Tricep",
+            MuscleGroup.TRICEPS,
+            [(0.32, 0.25), (0.35, 0.25), (0.34, 0.32), (0.33, 0.37), (0.30, 0.37), (0.30, 0.30)],
+            "left"
+        ),
+        MuscleDefinition(
+            "Right Tricep",
+            MuscleGroup.TRICEPS,
+            [(0.68, 0.25), (0.65, 0.25), (0.66, 0.32), (0.67, 0.37), (0.70, 0.37), (0.70, 0.30)],
             "right"
         ),
     ],
@@ -97,13 +111,13 @@ MUSCLE_DEFINITIONS = {
         MuscleDefinition(
             "Left Forearm",
             MuscleGroup.FOREARMS,
-            [(0.30, 0.40), (0.33, 0.40), (0.33, 0.52), (0.30, 0.52)],
+            [(0.28, 0.39), (0.31, 0.39), (0.30, 0.48), (0.29, 0.52), (0.27, 0.52), (0.27, 0.45)],
             "left"
         ),
         MuscleDefinition(
             "Right Forearm",
             MuscleGroup.FOREARMS,
-            [(0.70, 0.40), (0.67, 0.40), (0.67, 0.52), (0.70, 0.52)],
+            [(0.72, 0.39), (0.69, 0.39), (0.70, 0.48), (0.71, 0.52), (0.73, 0.52), (0.73, 0.45)],
             "right"
         ),
     ],
@@ -111,13 +125,13 @@ MUSCLE_DEFINITIONS = {
         MuscleDefinition(
             "Left Deltoid",
             MuscleGroup.SHOULDERS,
-            [(0.35, 0.20), (0.38, 0.22), (0.36, 0.28), (0.32, 0.26)],
+            [(0.33, 0.18), (0.31, 0.20), (0.30, 0.24), (0.31, 0.26), (0.34, 0.25), (0.35, 0.22)],
             "left"
         ),
         MuscleDefinition(
             "Right Deltoid",
             MuscleGroup.SHOULDERS,
-            [(0.65, 0.20), (0.62, 0.22), (0.64, 0.28), (0.68, 0.26)],
+            [(0.67, 0.18), (0.69, 0.20), (0.70, 0.24), (0.69, 0.26), (0.66, 0.25), (0.65, 0.22)],
             "right"
         ),
     ],
@@ -125,7 +139,7 @@ MUSCLE_DEFINITIONS = {
         MuscleDefinition(
             "Rectus Abdominis",
             MuscleGroup.ABS,
-            [(0.45, 0.35), (0.55, 0.35), (0.54, 0.50), (0.46, 0.50)],
+            [(0.43, 0.29), (0.57, 0.29), (0.57, 0.46), (0.43, 0.46)],
             "both"
         ),
     ],
@@ -133,13 +147,13 @@ MUSCLE_DEFINITIONS = {
         MuscleDefinition(
             "Left Oblique",
             MuscleGroup.OBLIQUES,
-            [(0.42, 0.38), (0.45, 0.38), (0.44, 0.48), (0.40, 0.48)],
+            [(0.39, 0.33), (0.42, 0.33), (0.42, 0.46), (0.40, 0.48), (0.38, 0.42)],
             "left"
         ),
         MuscleDefinition(
             "Right Oblique",
             MuscleGroup.OBLIQUES,
-            [(0.58, 0.38), (0.55, 0.38), (0.56, 0.48), (0.60, 0.48)],
+            [(0.61, 0.33), (0.58, 0.33), (0.58, 0.46), (0.60, 0.48), (0.62, 0.42)],
             "right"
         ),
     ],
@@ -147,13 +161,41 @@ MUSCLE_DEFINITIONS = {
         MuscleDefinition(
             "Left Quadriceps",
             MuscleGroup.QUADS,
-            [(0.42, 0.54), (0.47, 0.54), (0.47, 0.75), (0.42, 0.75)],
+            [(0.41, 0.56), (0.45, 0.56), (0.45, 0.73), (0.41, 0.73)],
             "left"
         ),
         MuscleDefinition(
             "Right Quadriceps",
             MuscleGroup.QUADS,
-            [(0.58, 0.54), (0.53, 0.54), (0.53, 0.75), (0.58, 0.75)],
+            [(0.59, 0.56), (0.55, 0.56), (0.55, 0.73), (0.59, 0.73)],
+            "right"
+        ),
+    ],
+    MuscleGroup.HAMSTRINGS: [
+        MuscleDefinition(
+            "Left Hamstring",
+            MuscleGroup.HAMSTRINGS,
+            [(0.42, 0.56), (0.45, 0.56), (0.45, 0.72), (0.42, 0.72)],
+            "left"
+        ),
+        MuscleDefinition(
+            "Right Hamstring",
+            MuscleGroup.HAMSTRINGS,
+            [(0.58, 0.56), (0.55, 0.56), (0.55, 0.72), (0.58, 0.72)],
+            "right"
+        ),
+    ],
+    MuscleGroup.GLUTES: [
+        MuscleDefinition(
+            "Left Glute",
+            MuscleGroup.GLUTES,
+            [(0.42, 0.53), (0.45, 0.54), (0.44, 0.58), (0.41, 0.57)],
+            "left"
+        ),
+        MuscleDefinition(
+            "Right Glute",
+            MuscleGroup.GLUTES,
+            [(0.58, 0.53), (0.55, 0.54), (0.56, 0.58), (0.59, 0.57)],
             "right"
         ),
     ],
@@ -161,13 +203,13 @@ MUSCLE_DEFINITIONS = {
         MuscleDefinition(
             "Left Calf",
             MuscleGroup.CALVES,
-            [(0.43, 0.77), (0.46, 0.77), (0.45, 0.90), (0.43, 0.90)],
+            [(0.41, 0.74), (0.45, 0.74), (0.45, 0.88), (0.42, 0.90), (0.41, 0.88)],
             "left"
         ),
         MuscleDefinition(
             "Right Calf",
             MuscleGroup.CALVES,
-            [(0.57, 0.77), (0.54, 0.77), (0.55, 0.90), (0.57, 0.90)],
+            [(0.59, 0.74), (0.55, 0.74), (0.55, 0.88), (0.58, 0.90), (0.59, 0.88)],
             "right"
         ),
     ],
@@ -175,13 +217,35 @@ MUSCLE_DEFINITIONS = {
         MuscleDefinition(
             "Left Hip Flexor",
             MuscleGroup.HIP_FLEXORS,
-            [(0.44, 0.50), (0.47, 0.50), (0.47, 0.54), (0.44, 0.54)],
+            [(0.43, 0.50), (0.45, 0.51), (0.45, 0.55), (0.43, 0.54)],
             "left"
         ),
         MuscleDefinition(
             "Right Hip Flexor",
             MuscleGroup.HIP_FLEXORS,
-            [(0.56, 0.50), (0.53, 0.50), (0.53, 0.54), (0.56, 0.54)],
+            [(0.57, 0.50), (0.55, 0.51), (0.55, 0.55), (0.57, 0.54)],
+            "right"
+        ),
+    ],
+    MuscleGroup.UPPER_BACK: [
+        MuscleDefinition(
+            "Upper Back",
+            MuscleGroup.UPPER_BACK,
+            [(0.40, 0.22), (0.60, 0.22), (0.60, 0.35), (0.40, 0.35)],
+            "both"
+        ),
+    ],
+    MuscleGroup.LATS: [
+        MuscleDefinition(
+            "Left Lat",
+            MuscleGroup.LATS,
+            [(0.37, 0.28), (0.40, 0.28), (0.41, 0.42), (0.38, 0.44), (0.36, 0.38)],
+            "left"
+        ),
+        MuscleDefinition(
+            "Right Lat",
+            MuscleGroup.LATS,
+            [(0.63, 0.28), (0.60, 0.28), (0.59, 0.42), (0.62, 0.44), (0.64, 0.38)],
             "right"
         ),
     ],

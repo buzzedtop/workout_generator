@@ -2,7 +2,7 @@
 Main workout image generator module.
 """
 
-from typing import Dict, Optional, Tuple
+from typing import Dict, Optional, Tuple, Union
 from PIL import Image, ImageDraw, ImageFont
 import os
 
@@ -63,40 +63,57 @@ class WorkoutImageGenerator:
         Returns:
             PIL Image object containing the generated workout visualization
         """
-        # Create base image
-        image = Image.new("RGB", (self.width, self.height), self.background_color)
-        draw = ImageDraw.Draw(image, "RGBA")
+        # Create base image with higher quality (RGBA for better blending)
+        image = Image.new("RGBA", (self.width, self.height), self.background_color + (255,))
         
-        # Draw muscle overlays first (underneath the wireframe)
+        # Create a separate layer for muscles with transparency
+        muscle_layer = Image.new("RGBA", (self.width, self.height), (255, 255, 255, 0))
+        muscle_draw = ImageDraw.Draw(muscle_layer, "RGBA")
+        
+        # Draw muscle overlays with smooth blending
         for muscle_group, activation in muscle_activations.items():
             if muscle_group in MUSCLE_DEFINITIONS:
                 color = get_activation_color(activation)
-                # Add transparency to the color
-                color_with_alpha = color + (100,)  # 100/255 opacity
+                # Increased opacity for better visibility
+                color_with_alpha = color + (140,)  # 140/255 opacity
                 
                 for muscle_def in MUSCLE_DEFINITIONS[muscle_group]:
                     scaled_points = self._scale_polygon(muscle_def.polygon_points)
-                    draw.polygon(scaled_points, fill=color_with_alpha, outline=None)
+                    # Draw filled polygon with smooth edges
+                    muscle_draw.polygon(scaled_points, fill=color_with_alpha, outline=None)
         
-        # Draw the wireframe figure on top
+        # Composite the muscle layer onto the base image
+        image = Image.alpha_composite(image, muscle_layer)
+        
+        # Convert back to RGB for final output
+        final_image = Image.new("RGB", (self.width, self.height), self.background_color)
+        final_image.paste(image, (0, 0), image)
+        
+        # Draw the wireframe figure on top with anti-aliasing
+        draw = ImageDraw.Draw(final_image, "RGBA")
         self.wireframe.draw_figure(draw)
         
-        # Add title if provided
+        # Add title if provided with better typography
         if title:
             try:
                 # Try to use a nicer font if available
-                font = ImageFont.truetype("/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf", 24)
+                font = ImageFont.truetype("/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf", 28)
             except:
                 # Fallback to default font
                 font = ImageFont.load_default()
             
-            # Draw title at the top
+            # Draw title at the top with shadow for better readability
             title_bbox = draw.textbbox((0, 0), title, font=font)
             title_width = title_bbox[2] - title_bbox[0]
             title_x = (self.width - title_width) // 2
-            draw.text((title_x, 10), title, fill=(0, 0, 0), font=font)
+            title_y = 15
+            
+            # Draw shadow
+            draw.text((title_x + 2, title_y + 2), title, fill=(100, 100, 100), font=font)
+            # Draw main text
+            draw.text((title_x, title_y), title, fill=(0, 0, 0), font=font)
         
-        return image
+        return final_image
     
     def generate_animation_frames(
         self,
@@ -134,7 +151,7 @@ class WorkoutImageGenerator:
 
 def generate_workout_image(
     exercise_name: str,
-    muscle_activations: Dict[MuscleGroup, float],
+    muscle_activations: Optional[Dict[MuscleGroup, float]] = None,
     width: int = 400,
     height: int = 800,
     save_path: Optional[str] = None,
@@ -143,8 +160,9 @@ def generate_workout_image(
     Convenience function to generate a workout image.
     
     Args:
-        exercise_name: Name of the exercise
-        muscle_activations: Dictionary mapping muscle groups to activation levels (0-100)
+        exercise_name: Name of the exercise (or Exercise object from exercises module)
+        muscle_activations: Dictionary mapping muscle groups to activation levels (0-100).
+                          If None, will attempt to use predefined exercise data.
         width: Image width in pixels
         height: Image height in pixels
         save_path: Optional path to save the image
@@ -154,6 +172,10 @@ def generate_workout_image(
         
     Example:
         >>> from workout_generator import generate_workout_image, MuscleGroup
+        >>> # Using predefined exercise
+        >>> image = generate_workout_image("Push-up")
+        >>> 
+        >>> # Using custom activations
         >>> image = generate_workout_image(
         ...     "Bicep Curls",
         ...     {
@@ -162,8 +184,30 @@ def generate_workout_image(
         ...     }
         ... )
     """
+    # Check if it's an Exercise object
+    from .exercises import Exercise
+    
+    if isinstance(exercise_name, Exercise):
+        title = exercise_name.name
+        activations = exercise_name.muscle_activations
+    elif muscle_activations is None:
+        # Try to get predefined exercise
+        from .exercises import get_exercise
+        try:
+            exercise = get_exercise(exercise_name)
+            title = exercise.name
+            activations = exercise.muscle_activations
+        except KeyError:
+            raise ValueError(
+                f"No muscle activations provided and '{exercise_name}' is not a predefined exercise. "
+                "Either provide muscle_activations or use a predefined exercise name."
+            )
+    else:
+        title = exercise_name
+        activations = muscle_activations
+    
     generator = WorkoutImageGenerator(width, height)
-    image = generator.generate(muscle_activations, title=exercise_name)
+    image = generator.generate(activations, title=title)
     
     if save_path:
         image.save(save_path)

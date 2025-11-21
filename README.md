@@ -1,6 +1,6 @@
 # Workout Generator
 
-A Python package for generating workout visualization images with wireframe human figures and muscle activation highlighting.
+A Python package for generating high-fidelity workout visualization images with anatomically accurate wireframe human figures and muscle activation highlighting.
 
 ## Example Animations
 
@@ -14,12 +14,14 @@ These animations show the gradual activation of muscles during exercise, transit
 
 ## Features
 
-- **Wireframe Human Figure**: Safe-for-work, simplified wireframe representation of the human body
+- **High-Fidelity Wireframe Figures**: Anatomically accurate wireframe representations with detailed muscle contours, joint lines, and proper body proportions
 - **Muscle Activation Visualization**: Color-coded muscle highlighting (blue = inactive, red = fully activated)
-- **Multiple Muscle Groups**: Support for major muscle groups including:
+- **29+ Predefined Calisthenics Exercises**: Ready-to-use muscle activation patterns for popular bodyweight exercises
+- **Multiple Muscle Groups**: Support for 14 major muscle groups including:
   - Upper body: chest, shoulders, biceps, triceps, forearms, upper back, lats, abs, obliques
   - Lower body: quads, hamstrings, glutes, calves, hip flexors
 - **Animation Support**: Generate multiple frames showing gradual muscle activation
+- **Professional Quality**: Anti-aliased rendering, smooth color blending, and typography
 - **Easy to Use**: Simple API for generating workout images
 
 ## Installation
@@ -36,9 +38,14 @@ pip install -e ".[dev]"
 ## Quick Start
 
 ```python
-from workout_generator import generate_workout_image, MuscleGroup
+from workout_generator import generate_workout_image
 
-# Generate a bicep curls visualization
+# Using a predefined exercise - Easy!
+image = generate_workout_image("Push-up", save_path="pushup.png")
+
+# Or specify custom muscle activations
+from workout_generator import MuscleGroup
+
 image = generate_workout_image(
     "Bicep Curls",
     {
@@ -47,6 +54,54 @@ image = generate_workout_image(
     },
     save_path="bicep_curls.png"
 )
+```
+
+## Predefined Calisthenics Exercises
+
+The package includes 29+ predefined bodyweight exercises with accurate muscle activation patterns:
+
+### Beginner Exercises (12)
+- Push-up, Wide Push-up
+- Squat, Lunge  
+- Plank, Side Plank, Sit-up, Crunch
+- Australian Pull-up
+- Glute Bridge
+- Calf Raise
+- Jumping Jack
+
+### Intermediate Exercises (13)
+- Diamond Push-up, Pike Push-up, Dips
+- Pull-up, Chin-up
+- Bulgarian Split Squat, Jump Squat
+- Bicycle Crunch, Leg Raise, Mountain Climber
+- Single Leg Glute Bridge
+- Burpee
+- Bear Crawl
+
+### Advanced Exercises (4)
+- Handstand Push-up
+- Pistol Squat
+- Hanging Leg Raise
+- V-up
+
+### Using Predefined Exercises
+
+```python
+from workout_generator import generate_workout_image, get_exercise, list_exercises
+
+# Generate using exercise name
+generate_workout_image("Pull-up", save_path="pullup.png")
+
+# Get exercise details
+exercise = get_exercise("burpee")
+print(f"{exercise.name}: {exercise.description}")
+print(f"Difficulty: {exercise.difficulty}")
+print(f"Muscles: {exercise.muscle_activations}")
+
+# List exercises by difficulty
+beginner_exercises = list_exercises(difficulty="beginner")
+for ex in beginner_exercises:
+    print(ex.name)
 ```
 
 ## Usage Examples
