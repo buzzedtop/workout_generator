@@ -10,6 +10,12 @@ A Python package for generating high-fidelity workout visualization images with 
 ### Sit-ups
 ![Sit-ups Animation](examples/output/situps.gif)
 
+### Push-up
+![Push-up Animation](examples/output/push_up.gif)
+
+### Squat
+![Squat Animation](examples/output/squat.gif)
+
 These animations show the gradual activation of muscles during exercise, transitioning from blue (inactive) to red (fully activated).
 
 ## Features
@@ -59,6 +65,14 @@ image = generate_workout_image(
 ## Predefined Calisthenics Exercises
 
 The package includes 29+ predefined bodyweight exercises with accurate muscle activation patterns:
+
+### Exercise Showcase (Animated)
+
+#### Pull-up (Upper Body Pull)
+![Pull-up Animation](examples/output/pull_up.gif)
+
+#### Plank (Core)
+![Plank Animation](examples/output/plank.gif)
 
 ### Beginner Exercises (12)
 - Push-up, Wide Push-up
